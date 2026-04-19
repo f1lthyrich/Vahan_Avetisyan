@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vahan Avetisyan — Master of Armenian Wind Instruments</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=DM+Sans:ital,wght@0,200;0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+:root{--w:#ffffff;--off:#f9f8f6;--light:#f2f0ec;--bdr:#e6e2db;--bdr2:#d0cbc2;--ink:#191713;--mid:#5c574f;--dim:#9c9790;--gold:#b5871e;--goldh:#c99b30;--goldbg:#fdf6e8;--ar:#D90012;--ab:#0033A0;--ao:#F2A800}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--w);color:var(--ink);font-family:'DM Sans',sans-serif;font-weight:300;overflow-x:hidden;cursor:none}
+#cur{position:fixed;width:7px;height:7px;background:var(--ink);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .18s,height .18s,background .18s}
+#cur-r{position:fixed;width:30px;height:30px;border:1px solid rgba(25,23,19,.2);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform .07s linear,width .3s,height .3s,border-color .3s}
+body.hov #cur{width:13px;height:13px;background:var(--gold)}
+body.hov #cur-r{width:46px;height:46px;border-color:var(--gold)}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;height:68px;display:flex;align-items:center;padding:0 56px;justify-content:space-between;background:rgba(255,255,255,0);transition:background .35s,box-shadow .35s,height .35s}
+nav.on{background:rgba(255,255,255,.97);box-shadow:0 1px 0 var(--bdr);height:58px;backdrop-filter:blur(16px)}
+.nlogo{font-family:'Playfair Display',serif;font-size:17px;font-weight:500;color:var(--ink);text-decoration:none}
+.nlogo b{color:var(--gold);font-weight:500}
+.nlinks{display:flex;gap:34px;list-style:none}
+.nlinks a{font-size:10.5px;font-weight:400;letter-spacing:.18em;text-transform:uppercase;color:var(--mid);text-decoration:none;transition:color .22s;position:relative}
+.nlinks a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:var(--gold);transition:width .25s}
+.nlinks a:hover{color:var(--ink)}
+.nlinks a:hover::after{width:100%}
+.nbook{font-size:10.5px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--w);background:var(--ink);padding:11px 24px;text-decoration:none;transition:background .22s}
+.nbook:hover{background:var(--gold)}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden;background:var(--off);padding:0 56px 88px}
+.hflag{position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,var(--ar) 33.33%,var(--ab) 33.33% 66.66%,var(--ao) 66.66%)}
+.hbg{position:absolute;right:-10px;bottom:-20px;font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(160px,23vw,360px);color:rgba(25,23,19,.05);line-height:1;user-select:none;pointer-events:none;white-space:nowrap;letter-spacing:-.04em}
+.hline{position:absolute;left:56px;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,transparent 8%,var(--bdr) 30%,var(--bdr) 70%,transparent 92%)}
+.hcontent{position:relative;z-index:5;max-width:860px}
+.heyebrow{display:flex;align-items:center;gap:14px;font-size:10px;font-weight:400;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:32px;opacity:0;animation:fup 1s .3s forwards}
+.heyebrow::before{content:'';display:block;width:32px;height:1px;background:var(--gold)}
+h1.hname{font-family:'Playfair Display',serif;font-weight:400;font-size:clamp(64px,9.5vw,136px);line-height:.9;letter-spacing:-.025em;color:var(--ink);opacity:0;animation:fup 1.1s .48s forwards}
+h1.hname em{font-style:italic;color:var(--gold)}
+.htagline{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(16px,1.9vw,22px);color:var(--mid);margin-top:22px;letter-spacing:.03em;opacity:0;animation:fup 1s .68s forwards}
+.htags{display:flex;gap:8px;flex-wrap:wrap;margin-top:30px;opacity:0;animation:fup 1s .88s forwards}
+.htag{font-size:9.5px;font-weight:400;letter-spacing:.22em;text-transform:uppercase;color:var(--mid);border:1px solid var(--bdr2);padding:7px 15px;background:var(--w);transition:border-color .22s,color .22s,background .22s}
+.htag:hover{border-color:var(--gold);color:var(--gold);background:var(--goldbg)}
+.hctas{display:flex;gap:14px;margin-top:48px;opacity:0;animation:fup 1s 1.05s forwards}
+.btn-dark{display:inline-block;padding:15px 36px;background:var(--ink);color:var(--w);font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;text-decoration:none;transition:background .22s}
+.btn-dark:hover{background:var(--gold)}
+.btn-ghost{display:inline-block;padding:15px 36px;border:1.5px solid var(--bdr2);color:var(--ink);font-size:10.5px;font-weight:400;letter-spacing:.22em;text-transform:uppercase;text-decoration:none;transition:border-color .22s,color .22s}
+.btn-ghost:hover{border-color:var(--ink)}
+.hscroll{position:absolute;bottom:44px;right:56px;display:flex;flex-direction:column;align-items:center;gap:10px;opacity:0;animation:fup 1s 1.4s forwards}
+.hscroll span{font-size:8.5px;letter-spacing:.38em;text-transform:uppercase;color:var(--dim);writing-mode:vertical-rl}
+.hbar{width:1px;height:56px;background:var(--bdr);position:relative;overflow:hidden}
+.hbar::after{content:'';position:absolute;top:-56px;left:0;width:1px;height:56px;background:var(--gold);animation:barr 2.2s 1.8s infinite}
+@keyframes barr{0%{top:-56px}100%{top:56px}}
+@keyframes fup{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
+
+/* STATS */
+#stats{background:var(--ink);padding:0 56px}
+.sgrid{display:grid;grid-template-columns:repeat(4,1fr);border-left:1px solid rgba(255,255,255,.07)}
+.sitem{padding:44px 40px;border-right:1px solid rgba(255,255,255,.07);text-align:center;transition:background .25s}
+.sitem:hover{background:rgba(255,255,255,.04)}
+.sn{font-family:'Playfair Display',serif;font-size:52px;font-weight:400;color:var(--w);line-height:1;display:block}
+.sn sup{font-size:24px;color:var(--gold);vertical-align:super}
+.sl{font-size:9px;font-weight:400;letter-spacing:.36em;text-transform:uppercase;color:rgba(255,255,255,.35);display:block;margin-top:10px}
+
+/* UTIL */
+.sec{padding:120px 56px}
+.inner{max-width:1200px;margin:0 auto}
+.slabel{font-size:9.5px;font-weight:400;letter-spacing:.46em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.slabel::before{content:'';display:block;width:24px;height:1px;background:var(--gold)}
+h2.stitle{font-family:'Playfair Display',serif;font-weight:400;font-size:clamp(38px,4.8vw,62px);line-height:1.02;color:var(--ink)}
+h2.stitle em{font-style:italic;color:var(--gold)}
+.rv{opacity:0;transform:translateY(32px);transition:opacity .75s cubic-bezier(.23,1,.32,1),transform .75s cubic-bezier(.23,1,.32,1)}
+.rv.vis{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
+.rule{height:1px;background:var(--bdr);margin:0 56px}
+
+/* PRESS */
+#press{background:var(--w);padding:120px 56px}
+.ptop{max-width:1200px;margin:0 auto 0;display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;padding-bottom:72px}
+.pvidwrap{position:relative}
+.pvidc{position:relative;width:100%;aspect-ratio:16/9;background:var(--ink);overflow:hidden;box-shadow:0 24px 80px rgba(25,23,19,.15)}
+.pvidc iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+.pbadge{position:absolute;bottom:-20px;right:-20px;background:var(--gold);color:var(--w);padding:16px 20px;text-align:center;box-shadow:0 8px 32px rgba(181,135,30,.35)}
+.pbig{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;line-height:1;display:block}
+.psm{font-size:8px;letter-spacing:.3em;text-transform:uppercase;display:block;margin-top:4px;opacity:.85}
+.pquote{font-family:'Playfair Display',serif;font-style:italic;font-size:21px;line-height:1.6;color:var(--mid);border-left:2px solid var(--gold);padding-left:28px;margin-bottom:32px}
+.pbody{font-size:14px;font-weight:300;line-height:1.8;color:var(--mid);margin-bottom:24px}
+.pbody strong{color:var(--ink);font-weight:500}
+
+/* press featured bar */
+.pfeat{background:var(--off);padding:44px 56px;border-top:1px solid var(--bdr);max-width:1200px;margin:0 auto}
+.pfeat-label{font-size:9px;font-weight:400;letter-spacing:.42em;text-transform:uppercase;color:var(--dim);text-align:center;margin-bottom:28px}
+.plogos{display:flex;align-items:center;justify-content:center;flex-wrap:wrap}
+.plogo{padding:18px 36px;border-right:1px solid var(--bdr);font-family:'Playfair Display',serif;font-size:15px;font-weight:500;color:var(--bdr2);letter-spacing:.03em;transition:color .22s;text-align:center;flex:1;min-width:130px}
+.plogo:last-child{border-right:none}
+.plogo:hover{color:var(--mid)}
+.plogo span{display:block;font-family:'DM Sans',sans-serif;font-size:8px;font-weight:300;letter-spacing:.28em;text-transform:uppercase;color:var(--dim);margin-top:4px}
+
+/* ABOUT */
+#about{background:var(--off);padding:120px 56px}
+.agrid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1.15fr;gap:88px;align-items:center}
+.aimg{position:relative}
+.aimgbox{width:100%;aspect-ratio:4/5;background:var(--light);position:relative;overflow:hidden;box-shadow:0 20px 60px rgba(25,23,19,.08)}
+.aimgbox::before{content:'';position:absolute;inset:0;background:linear-gradient(145deg,var(--light) 0%,var(--bdr) 100%)}
+.aimginner{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.aimginner span{font-size:80px;opacity:.12;line-height:1}
+.aimgcap{font-size:9px;letter-spacing:.36em;text-transform:uppercase;color:var(--dim);position:absolute;bottom:20px;left:0;right:0;text-align:center}
+.aimg::before{content:'';position:absolute;top:-12px;left:-12px;right:12px;bottom:12px;border:1px solid var(--bdr);pointer-events:none;z-index:-1}
+.aflagbadge{position:absolute;bottom:-16px;right:-16px;background:var(--w);border:1px solid var(--bdr);padding:16px 18px;text-align:center;box-shadow:0 4px 20px rgba(25,23,19,.06)}
+.flaglbl{font-size:7.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--dim);display:block;margin-top:6px}
+.abody p{font-family:'Playfair Display',serif;font-size:18px;line-height:1.78;color:var(--mid);margin-bottom:22px}
+.abody p strong{color:var(--ink);font-weight:500}
+.abody p em{font-style:italic;color:var(--gold)}
+.adets{margin-top:40px;padding-top:36px;border-top:1px solid var(--bdr);display:flex;flex-direction:column;gap:14px}
+.drow{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--dim)}
+.dico{width:34px;height:34px;border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.drow a{color:var(--gold);text-decoration:none}
+.drow a:hover{color:var(--goldh)}
+
+/* INSTRUMENTS */
+#instruments{background:var(--w);padding:120px 56px}
+.igrid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--bdr)}
+.icard{background:var(--w);padding:48px 40px;transition:background .28s;position:relative;overflow:hidden}
+.icard:hover{background:var(--off)}
+.icard::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--gold);transition:width .35s}
+.icard:hover::after{width:100%}
+.inum{font-family:'Playfair Display',serif;font-size:60px;font-weight:400;color:var(--bdr);position:absolute;top:20px;right:28px;line-height:1;transition:color .28s}
+.icard:hover .inum{color:var(--light)}
+.iglyph{font-size:36px;display:block;margin-bottom:20px;line-height:1}
+.iarm{font-family:'Playfair Display',serif;font-style:italic;font-size:11px;color:var(--dim);letter-spacing:.12em;display:block;margin-bottom:6px}
+.iname{font-family:'Playfair Display',serif;font-size:22px;font-weight:500;color:var(--ink);display:block;margin-bottom:16px}
+.idesc{font-size:13px;line-height:1.75;color:var(--dim)}
+.iwide{grid-column:span 3;display:grid;grid-template-columns:auto 1px 1fr auto;align-items:center;gap:40px;padding:40px 52px;background:var(--off)}
+.iwide:hover{background:var(--light)}
+.ivr{height:70px;background:var(--bdr);width:1px}
+.icnt .big{font-family:'Playfair Display',serif;font-size:60px;font-weight:400;color:var(--gold);line-height:1}
+.icnt small{font-size:9px;letter-spacing:.36em;text-transform:uppercase;color:var(--dim);display:block;margin-top:2px}
+
+/* SERVICES */
+#services{background:var(--off);padding:120px 56px}
+.svgrid{max-width:1200px;margin:60px auto 0;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--bdr)}
+.svcard{background:var(--off);padding:52px 40px;transition:background .25s;position:relative}
+.svcard:hover{background:var(--w)}
+.svn{font-family:'Playfair Display',serif;font-size:56px;font-weight:400;color:rgba(25,23,19,.06);position:absolute;top:20px;right:24px;line-height:1;transition:color .28s}
+.svcard:hover .svn{color:rgba(25,23,19,.1)}
+.svico{font-size:26px;display:block;margin-bottom:22px}
+.svtitle{font-family:'Playfair Display',serif;font-size:22px;font-weight:400;color:var(--ink);margin-bottom:14px;line-height:1.2}
+.svdesc{font-size:13px;line-height:1.78;color:var(--dim)}
+.svtags{display:flex;flex-wrap:wrap;gap:6px;margin-top:24px}
+.stag{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);border:1px solid var(--bdr2);padding:4px 10px;background:var(--w)}
+
+/* VIDEOS */
+#videos{background:var(--w);padding:120px 56px}
+.vhdr{max-width:1200px;margin:0 auto 60px;display:flex;justify-content:space-between;align-items:flex-end}
+.vmore{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);text-decoration:none;display:flex;align-items:center;gap:8px;transition:gap .25s}
+.vmore:hover{gap:14px}
+.vmore::after{content:'→'}
+.vgrid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:1px;background:var(--bdr)}
+.vc{background:var(--light);aspect-ratio:16/10;position:relative;overflow:hidden;cursor:pointer}
+.vc:first-child{grid-row:span 2;aspect-ratio:auto}
+.vinner{position:absolute;inset:0;transition:transform .5s cubic-bezier(.23,1,.32,1)}
+.vc:hover .vinner{transform:scale(1.03)}
+.vover{position:absolute;inset:0;background:linear-gradient(to top,rgba(25,23,19,.72) 0%,rgba(25,23,19,.1) 60%,transparent 100%)}
+.vplay{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:48px;height:48px;border:1.5px solid rgba(255,255,255,.5);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--w);font-size:14px;padding-left:3px;transition:background .25s,border-color .25s,transform .25s;backdrop-filter:blur(4px);background:rgba(255,255,255,.08)}
+.vc:hover .vplay{background:var(--gold);border-color:var(--gold);transform:translate(-50%,-50%) scale(1.08)}
+.vmeta{position:absolute;bottom:0;left:0;right:0;padding:18px 22px}
+.vtitle{font-family:'Playfair Display',serif;font-size:17px;color:var(--w);margin-bottom:4px;line-height:1.2}
+.vsub{font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+.vviews{position:absolute;top:14px;right:14px;font-size:9px;letter-spacing:.14em;color:rgba(255,255,255,.5);background:rgba(25,23,19,.5);padding:4px 9px;backdrop-filter:blur(4px)}
+.c1{background:linear-gradient(145deg,#1c1508,#2a1e0a)}
+.c2{background:linear-gradient(145deg,#0e1118,#151c25)}
+.c3{background:linear-gradient(145deg,#14100a,#1e1812)}
+.c4{background:linear-gradient(145deg,#0f1208,#171e10)}
+.c5{background:linear-gradient(145deg,#130e14,#1e1520)}
+
+/* TESTIMONIALS */
+#testimonials{background:var(--off);padding:120px 0;overflow:hidden;position:relative}
+.thd{max-width:1200px;margin:0 auto 60px;padding:0 56px;text-align:center}
+.marq{display:flex;gap:1px;width:max-content;animation:marqa 38s linear infinite}
+.marq:hover{animation-play-state:paused}
+@keyframes marqa{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+#testimonials::before,#testimonials::after{content:'';position:absolute;top:0;bottom:0;width:160px;z-index:10;pointer-events:none}
+#testimonials::before{left:0;background:linear-gradient(to right,var(--off),transparent)}
+#testimonials::after{right:0;background:linear-gradient(to left,var(--off),transparent)}
+.tcard{width:360px;flex-shrink:0;background:var(--w);padding:40px 36px;border:1px solid var(--bdr);position:relative}
+.tstar{position:absolute;top:22px;right:24px;color:var(--gold);font-size:10px;letter-spacing:2px}
+.tq{font-family:'Playfair Display',serif;font-size:34px;color:var(--bdr);line-height:1;display:block;margin-bottom:12px}
+.ttext{font-family:'Playfair Display',serif;font-style:italic;font-size:16px;line-height:1.65;color:var(--mid);margin-bottom:24px}
+.twho{font-size:9.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--dim)}
+
+/* BOOKING */
+#booking{background:var(--w);padding:120px 56px}
+.bgrid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1.1fr;gap:88px;align-items:start}
+.bintro{font-family:'Playfair Display',serif;font-size:19px;line-height:1.72;color:var(--mid);margin-bottom:48px}
+.cms{display:flex;flex-direction:column;gap:14px}
+.cm{display:flex;align-items:center;gap:18px;text-decoration:none;padding:18px 22px;border:1px solid var(--bdr);background:var(--w);transition:border-color .22s,background .22s}
+.cm:hover{border-color:var(--goldh);background:var(--goldbg)}
+.cico{width:38px;height:38px;background:var(--light);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;font-weight:500;font-family:'DM Sans',sans-serif;color:var(--mid)}
+.clbl{font-size:8.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--dim);display:block;margin-bottom:4px}
+.cval{font-size:14px;color:var(--ink);font-weight:400}
+.carr{margin-left:auto;font-size:13px;color:var(--bdr2);transition:transform .22s,color .22s}
+.cm:hover .carr{transform:translateX(4px);color:var(--gold)}
+.bform{background:var(--off);border:1px solid var(--bdr);padding:48px 44px}
+.ftitle{font-family:'Playfair Display',serif;font-size:26px;font-weight:400;color:var(--ink);margin-bottom:32px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fg{margin-bottom:18px}
+.flbl{font-size:9px;font-weight:400;letter-spacing:.32em;text-transform:uppercase;color:var(--dim);display:block;margin-bottom:7px}
+.fi,.fsel,.fta{width:100%;background:var(--w);border:1px solid var(--bdr);color:var(--ink);font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:300;padding:13px 15px;outline:none;transition:border-color .22s;appearance:none}
+.fi:focus,.fsel:focus,.fta:focus{border-color:var(--gold)}
+.fi::placeholder,.fta::placeholder{color:var(--dim)}
+.fta{resize:vertical;min-height:96px}
+.fsel option{background:var(--w)}
+.bsub{width:100%;padding:17px;background:var(--ink);color:var(--w);border:none;font-family:'DM Sans',sans-serif;font-size:10.5px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;cursor:pointer;transition:background .22s;margin-top:6px}
+.bsub:hover{background:var(--gold)}
+
+/* FOOTER */
+footer{background:var(--ink);padding:72px 56px 44px}
+.fgrid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:52px;padding-bottom:52px;border-bottom:1px solid rgba(255,255,255,.08)}
+.flogo{font-family:'Playfair Display',serif;font-size:16px;font-weight:500;color:var(--w);display:block;margin-bottom:14px}
+.flogo b{color:var(--gold)}
+.fbrand p{font-size:13px;font-weight:300;line-height:1.7;color:rgba(255,255,255,.35);max-width:240px}
+.fflag{margin-top:20px;font-size:20px}
+.fsocs{display:flex;gap:10px;margin-top:20px}
+.sbtn{width:34px;height:34px;border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.3);text-decoration:none;font-size:11px;font-weight:500;transition:border-color .22s,color .22s;font-family:'DM Sans',sans-serif}
+.sbtn:hover{border-color:var(--gold);color:var(--gold)}
+.fcol h4{font-size:8.5px;letter-spacing:.38em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:18px}
+.fcol ul{list-style:none}
+.fcol li{margin-bottom:10px}
+.fcol a{font-size:13px;font-weight:300;color:rgba(255,255,255,.4);text-decoration:none;transition:color .22s}
+.fcol a:hover{color:var(--gold)}
+.fbot{max-width:1200px;margin:28px auto 0;display:flex;justify-content:space-between;align-items:center}
+.fcopy{font-size:11px;color:rgba(255,255,255,.2);font-weight:300}
+.fqt{font-family:'Playfair Display',serif;font-style:italic;font-size:13px;color:rgba(255,255,255,.2)}
+
+/* MODAL */
+.modal{position:fixed;inset:0;background:rgba(25,23,19,.92);z-index:2000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .35s;backdrop-filter:blur(8px)}
+.modal.open{opacity:1;pointer-events:all}
+.mbox{background:var(--w);padding:0;max-width:580px;width:90%;transform:translateY(20px);transition:transform .35s;overflow:hidden;position:relative}
+.modal.open .mbox{transform:none}
+.mbody{padding:48px}
+.mbody h3{font-family:'Playfair Display',serif;font-size:28px;font-weight:400;color:var(--ink);margin-bottom:10px}
+.mbody p{font-size:13px;color:var(--dim);margin-bottom:28px;line-height:1.6}
+.mlinks{display:flex;gap:12px}
+.mclose{position:absolute;top:0;right:0;width:48px;height:48px;background:var(--ink);color:var(--w);border:none;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .22s}
+.mclose:hover{background:var(--gold)}
+
+@media(max-width:1050px){.ptop,.agrid,.bgrid{grid-template-columns:1fr;gap:56px}.aimg{max-width:400px}.igrid{grid-template-columns:1fr 1fr}.iwide{grid-column:span 2}.svgrid{grid-template-columns:1fr 1fr}.vgrid{grid-template-columns:1fr 1fr}.vc:first-child{grid-row:span 1}.sgrid{grid-template-columns:repeat(2,1fr)}.fgrid{grid-template-columns:1fr 1fr;gap:36px}}
+@media(max-width:700px){nav{padding:0 24px}.nlinks{display:none}.sec,#about,#instruments,#services,#videos,#booking,#press,#testimonials{padding:72px 24px}#stats{padding:0 24px}h1.hname{font-size:clamp(52px,14vw,90px)}.igrid{grid-template-columns:1fr}.iwide{grid-column:span 1;grid-template-columns:1fr;gap:16px}.ivr{display:none}.svgrid{grid-template-columns:1fr}.vgrid{grid-template-columns:1fr}.frow{grid-template-columns:1fr}.fgrid{grid-template-columns:1fr}.plogos{flex-direction:column}.plogo{border-right:none;border-bottom:1px solid var(--bdr)}#hero{padding:0 24px 72px}.hscroll{right:24px}.rule{margin:0 24px}}
+</style>
+</head>
+<body>
+<div id="cur"></div><div id="cur-r"></div>
+
+<nav id="nav">
+  <a href="#hero" class="nlogo">Vahan <b>Avetisyan</b></a>
+  <ul class="nlinks">
+    <li><a href="#press">Press</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#instruments">Instruments</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#videos">Videos</a></li>
+    <li><a href="#booking">Contact</a></li>
+  </ul>
+  <a href="#booking" class="nbook">Book Now</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hflag"></div>
+  <div class="hbg">Music</div>
+  <div class="hline"></div>
+  <div class="hcontent">
+    <div class="heyebrow">🇦🇲 Armenian Heritage &nbsp;·&nbsp; 🇺🇸 Los Angeles &nbsp;·&nbsp; As Seen on TV</div>
+    <h1 class="hname">Vahan<br><em>Avetisyan</em></h1>
+    <p class="htagline">Master of Armenian Wind Instruments &nbsp;·&nbsp; Performer · Teacher · Storyteller</p>
+    <div class="htags">
+      <span class="htag">🎷 Saxophone</span>
+      <span class="htag">🪈 Duduk</span>
+      <span class="htag">🎵 Pku</span>
+      <span class="htag">📯 Zourna</span>
+      <span class="htag">🎶 Shvi</span>
+      <span class="htag">🎺 Clarinet</span>
+    </div>
+    <div class="hctas">
+      <a href="#booking" class="btn-dark">Book a Performance</a>
+      <a href="#press" class="btn-ghost">Watch the Interview ↓</a>
+    </div>
+  </div>
+  <div class="hscroll"><div class="hbar"></div><span>Scroll</span></div>
+</section>
+
+<!-- STATS -->
+<div id="stats">
+  <div class="sgrid">
+    <div class="sitem rv"><span class="sn">14<sup>K</sup></span><span class="sl">Instagram Followers</span></div>
+    <div class="sitem rv d1"><span class="sn">400<sup>+</sup></span><span class="sl">Posts &amp; Performances</span></div>
+    <div class="sitem rv d2"><span class="sn">6</span><span class="sl">Instruments Mastered</span></div>
+    <div class="sitem rv d3"><span class="sn">TV</span><span class="sl">Featured on Television</span></div>
+  </div>
+</div>
+
+<!-- PRESS -->
+<section id="press">
+  <div class="ptop">
+    <div class="pvidwrap rv">
+      <div class="pvidc">
+        <iframe src="https://www.youtube.com/embed/ehJ3WYASMaU?rel=0&modestbranding=1" title="Vahan Avetisyan TV Interview" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div class="pbadge"><span class="pbig">📺</span><span class="psm">Featured on TV</span></div>
+    </div>
+    <div class="rv d2">
+      <div style="margin-bottom:28px">
+        <div class="slabel">As Seen on Television</div>
+        <h2 class="stitle">The Interview<br>That <em>Introduced</em><br>the World</h2>
+      </div>
+      <p class="pquote">"When the duduk speaks, it carries thousands of years of Armenian history in a single breath."</p>
+      <p class="pbody">Vahan Avetisyan's mastery of Armenian wind instruments caught the attention of television — and for good reason. In this exclusive interview, Vahan speaks about his journey from Armenia to the United States, his deep connection to instruments like the <strong>duduk, pku, and zourna</strong>, and his mission to keep these ancient traditions alive in the Los Angeles Armenian diaspora.</p>
+      <p class="pbody">A musician who bridges <strong>two continents and three thousand years of culture</strong>, Vahan's story resonates far beyond the Armenian community.</p>
+      <a href="https://youtu.be/ehJ3WYASMaU" target="_blank" class="btn-dark" style="display:inline-block;margin-top:8px">Watch Full Interview ↗</a>
+    </div>
+  </div>
+  <div class="pfeat rv">
+    <p class="pfeat-label">As Seen &amp; Featured In</p>
+    <div class="plogos">
+      <div class="plogo">Armenian TV<span>Television Feature</span></div>
+      <div class="plogo">Hay Life<span>Cultural Media</span></div>
+      <div class="plogo">YouTube<span>Vahan Avetisyan</span></div>
+      <div class="plogo">Instagram<span>14K+ Followers</span></div>
+      <div class="plogo">Facebook<span>Vahan Avetisyan</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="agrid">
+    <div class="aimg rv">
+      <div class="aimgbox">
+        <div class="aimginner">
+  <img src="https://scontent-lax3-2.xx.fbcdn.net/v/t1.6435-9/103282271_3929446037129346_6330531416103696339_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=2a1932&_nc_ohc=-2eQkrqRhusQ7kNvwFTP7Hu&_nc_oc=AdqABGJZio5GxFWohKLHE1gSJLrS18KUjLiPwwmrLkjAgn4icKY6PwsKFQSx_lwmqRKWGPdnTsUieSYEa91WRaaK&_nc_zt=23&_nc_ht=scontent-lax3-2.xx&_nc_gid=jkegi70k_mUDLkdC91ljHQ&_nc_ss=7a389&oh=00_Af32JTYY4gUtmaw3_M_iPILKpRb8Zrbidp8xQFLvcz3r1g&oe=6A0B9D70" 
+       alt="Vahan Avetisyan"
+       style="width:100%; height:100%; object-fit:cover;">
+</div>
+        <div class="aimgcap">Musician · Performer · Teacher · 🇦🇲 🇺🇸</div>
+      </div>
+      <div class="aflagbadge"><span style="font-size:22px">🇦🇲</span><span class="flaglbl">Armenian<br>Heritage</span></div>
+    </div>
+    <div class="rv d2">
+      <div style="margin-bottom:32px">
+        <div class="slabel">The Artist</div>
+        <h2 class="stitle">A Voice Carved<br>from <em>Apricot Wood</em></h2>
+      </div>
+      <div class="abody">
+        <p><strong>Vahan Avetisyan</strong> is a Los Angeles-based Armenian musician — a living bridge between the ancient highlands of Armenia and the stages of the United States. A master of six wind instruments, his soul is rooted in centuries-old traditions of his homeland.</p>
+        <p>Whether breathing life into the <em>duduk</em> — Armenia's most sacred instrument, UNESCO-recognized — or igniting a room with the <em>saxophone</em>, Vahan commands every stage with the authority of a craftsman who has devoted his life to the art.</p>
+        <p>Based in <em>Glendale, California</em>, Vahan performs at weddings, cultural events, concerts, and private occasions — anywhere music has the power to move souls across generations.</p>
+      </div>
+      <div class="adets">
+        <div class="drow"><div class="dico">📍</div><span>Glendale, California &nbsp;·&nbsp; 🇦🇲 Armenian Heritage</span></div>
+        <div class="drow"><div class="dico">📞</div><span>Bookings: <a href="tel:+18184056080">+1 (818) 405-6080</a></span></div>
+        <div class="drow"><div class="dico">📸</div><span><a href="https://instagram.com/vahan_avetisyan_music" target="_blank">@vahan_avetisyan_music</a> · 14.1K followers</span></div>
+        <div class="drow"><div class="dico">▶</div><span><a href="https://youtube.com/@vahanavetisyan" target="_blank">YouTube — Vahan Avetisyan</a></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- INSTRUMENTS -->
+<section id="instruments">
+  <div class="inner" style="margin-bottom:60px">
+    <div class="rv"><div class="slabel">The Instruments</div><h2 class="stitle">Six Voices,<br>One <em>Master</em></h2></div>
+  </div>
+  <div class="igrid" style="max-width:1200px;margin:0 auto">
+    <div class="icard rv"><span class="inum">01</span><span class="iglyph">🪈</span><span class="iarm">Դուդուկ</span><span class="iname">Duduk</span><p class="idesc">Armenia's most sacred instrument. A double-reed woodwind carved from apricot wood, UNESCO Intangible Heritage of Humanity. The soul of an entire civilization in a single breath.</p></div>
+    <div class="icard rv d1"><span class="inum">02</span><span class="iglyph">🎷</span><span class="iarm">Սաքսոֆոն</span><span class="iname">Saxophone</span><p class="idesc">From jazz-inflected pop to Armenian folk fusion. The saxophone in Vahan's hands becomes entirely his own — soulful, commanding, impossible to ignore at any event.</p></div>
+    <div class="icard rv d2"><span class="inum">03</span><span class="iglyph">🎵</span><span class="iarm">Փկու</span><span class="iname">Pku</span><p class="idesc">An ancient single-reed horn of Armenian origin with a piercing, nasal tone unlike any other instrument on earth. Rare. Elemental. In very few hands worldwide.</p></div>
+    <div class="icard rv"><span class="inum">04</span><span class="iglyph">📯</span><span class="iarm">Զուռնա</span><span class="iname">Zourna</span><p class="idesc">The outdoor conical oboe of the Caucasus. Loud, jubilant, built for open-air weddings and celebrations. When the zourna plays, nobody stays seated.</p></div>
+    <div class="icard rv d1"><span class="inum">05</span><span class="iglyph">🎶</span><span class="iarm">Շվի</span><span class="iname">Shvi</span><p class="idesc">A delicate end-blown Armenian folk flute producing a soft, breathy, ethereal sound. The quiet whisper of the Armenian mountains — meditative and deeply spiritual.</p></div>
+    <div class="icard iwide rv d2">
+      <div><span class="iglyph">🎺</span><span class="iarm">Կլառնետ</span><span class="iname">Clarinet</span></div>
+      <div class="ivr"></div>
+      <p class="idesc">Bridging classical and folk traditions, Vahan's clarinet spans Armenian folk songs, classical repertoire, and contemporary fusion — a testament to his formal training and boundless musical range. Together with his five other instruments, the clarinet completes a toolkit for any style, any occasion, any stage in the world.</p>
+      <div class="icnt"><div class="big">6</div><small>Instruments</small></div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="inner">
+    <div class="rv"><div class="slabel">What I Offer</div><h2 class="stitle">Where Do You<br>Need <em>the Music?</em></h2></div>
+  </div>
+  <div class="svgrid">
+    <div class="svcard rv"><span class="svn">01</span><span class="svico">💍</span><h3 class="svtitle">Weddings &amp; Celebrations</h3><p class="svdesc">From ceremony to last dance. Duduk for the ceremony, saxophone for the reception — Vahan delivers both with mastery and transforms every wedding into a lifelong memory.</p><div class="svtags"><span class="stag">Armenian Weddings</span><span class="stag">Multi-cultural</span><span class="stag">Reception</span></div></div>
+    <div class="svcard rv d1"><span class="svn">02</span><span class="svico">🎭</span><h3 class="svtitle">Concerts &amp; Stage</h3><p class="svdesc">Solo concerts, cultural festivals, ensemble performances. A commanding stage presence built over years performing across Armenia, Russia, and the United States.</p><div class="svtags"><span class="stag">Solo Shows</span><span class="stag">Festivals</span><span class="stag">Ensemble</span></div></div>
+    <div class="svcard rv d2"><span class="svn">03</span><span class="svico">🎓</span><h3 class="svtitle">Private Lessons</h3><p class="svdesc">An active teacher of wind instruments. Duduk, saxophone, clarinet, and more — professional results for all levels, from beginners to advanced students.</p><div class="svtags"><span class="stag">Duduk</span><span class="stag">Saxophone</span><span class="stag">All Levels</span></div></div>
+    <div class="svcard rv"><span class="svn">04</span><span class="svico">🍽️</span><h3 class="svtitle">Corporate &amp; Private Events</h3><p class="svdesc">Elevate corporate dinners, private parties, and galas with live music that leaves guests talking. Background ambiance or full headline performance — your choice.</p><div class="svtags"><span class="stag">Corporate</span><span class="stag">Private Party</span><span class="stag">Gala</span></div></div>
+    <div class="svcard rv d1"><span class="svn">05</span><span class="svico">🎬</span><h3 class="svtitle">Studio &amp; Film</h3><p class="svdesc">Authentic Armenian wind instruments for your soundtrack, album, or film score. From the mournful cry of the duduk to the warmth of the sax — unmatched authenticity.</p><div class="svtags"><span class="stag">Film Score</span><span class="stag">Albums</span><span class="stag">Soundtrack</span></div></div>
+    <div class="svcard rv d2"><span class="svn">06</span><span class="svico">🕌</span><h3 class="svtitle">Cultural &amp; Community</h3><p class="svdesc">Armenian church events, diaspora gatherings, national holidays, heritage celebrations. Vahan understands the cultural weight of these moments deeply.</p><div class="svtags"><span class="stag">Armenian Community</span><span class="stag">Church</span><span class="stag">Heritage</span></div></div>
+  </div>
+</section>
+
+<!-- VIDEOS -->
+<section id="videos">
+  <div class="vhdr rv">
+    <div><div class="slabel">Watch &amp; Listen</div><h2 class="stitle">See the <em>Performance</em></h2></div>
+    <a href="https://instagram.com/vahan_avetisyan_music" target="_blank" class="vmore">All videos on Instagram</a>
+  </div>
+  <div class="vgrid">
+    <div class="vc rv" onclick="openMod('TV Interview','Watch the full interview on YouTube')"><div class="vinner c1"></div><div class="vover"></div><div class="vplay">▶</div><div class="vmeta"><div class="vtitle">TV Interview</div><div class="vsub">As Seen on Television</div></div><div class="vviews">📺 Featured</div></div>
+    <div class="vc rv d1" onclick="openMod('Sax Potpourri','Watch on Instagram @vahan_avetisyan_music')"><div class="vinner c2"></div><div class="vover"></div><div class="vplay">▶</div><div class="vmeta"><div class="vtitle">Sax Potpourri</div><div class="vsub">Weekend · Live</div></div><div class="vviews">3,708 ❤</div></div>
+    <div class="vc rv d2" onclick="openMod('Jan Hayer','Watch on Instagram @vahan_avetisyan_music')"><div class="vinner c3"></div><div class="vover"></div><div class="vplay">▶</div><div class="vmeta"><div class="vtitle">Jan Hayer</div><div class="vsub">Armenian Folk</div></div><div class="vviews">2,524 ❤</div></div>
+    <div class="vc rv d1" onclick="openMod('Родина 🇦🇲','Watch on Instagram @vahan_avetisyan_music')"><div class="vinner c4"></div><div class="vover"></div><div class="vplay">▶</div><div class="vmeta"><div class="vtitle">Родина 🇦🇲</div><div class="vsub">Homeland · Emotional</div></div><div class="vviews">2,193 ❤</div></div>
+    <div class="vc rv d2" onclick="openMod('Один тоже','Watch on Instagram @vahan_avetisyan_music')"><div class="vinner c5"></div><div class="vover"></div><div class="vplay">▶</div><div class="vmeta"><div class="vtitle">Один тоже 👍</div><div class="vsub">Solo Duduk</div></div><div class="vviews">2,992 ❤</div></div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="thd rv"><div class="slabel" style="justify-content:center"><span>What People Say</span></div><h2 class="stitle">The <em>Audience Speaks</em></h2></div>
+  <div class="marq">
+    <div class="tcard"><div class="tstar">★★★★★</div><span class="tq">"</span><p class="ttext">Vahan played at our Armenian wedding. When the duduk started, my mother cried. That sound carries a thousand years of our people's soul.</p><span class="twho">— Anna K., Los Angeles, CA</span></div>
+    <div class="tcard"><div class="tstar">★★★★★</div><span class="tq">"</span><p class="ttext">The way he moves between the pku and saxophone in one set — it's like watching two different centuries talk to each other. Incredible.</p><span class="twho">— Armen M., Event Organizer</span></div>
+    <div class="tcard"><div class="tstar">★★★★★</div><span class="tq">"</span><p class="ttext">My daughter takes lessons from Vahan. In six months she was playing real Armenian folk songs on the duduk. His teaching is exceptional.</p><span class="twho">— Narine H., Parent</span></div>
+    <div class="tcard"><div class="tstar">★★★★★</div><span class="tq">"</span><p class="ttext">We hired Vahan for our corporate gala. Non-Armenian guests were completely mesmerized. Three people asked who he was. Unforgettable.</p><span class="twho">— Michael T., Event Director</span></div>
+    <div class="tcard"><div class="tstar">★★★★★</div><span class="tq">"</span><p class="ttext">Watching Vahan perform live was one of the most powerful musical experiences of my entire life. True, authentic artistry.</p><span class="twho">— Dmitri V., Moscow</span></div>
+    <div class="tcard"><div class="tstar">★★★★★</div><span class="tq">"</span><p class="ttext">Vahan played at our Armenian wedding. When the duduk started, my mother cried. That sound carries a thousand years of our people's soul.</p><span class="twho">— Anna K., Los Angeles, CA</span></div>
+    <div class="tcard"><div class="tstar">★★★★★</div><span class="tq">"</span><p class="ttext">The way he moves between the pku and saxophone in one set — it's like watching two different centuries talk to each other. Incredible.</p><span class="twho">— Armen M., Event Organizer</span></div>
+    <div class="tcard"><div class="tstar">★★★★★</div><span class="tq">"</span><p class="ttext">My daughter takes lessons from Vahan. In six months she was playing real Armenian folk songs on the duduk. His teaching is exceptional.</p><span class="twho">— Narine H., Parent</span></div>
+    <div class="tcard"><div class="tstar">★★★★★</div><span class="tq">"</span><p class="ttext">We hired Vahan for our corporate gala. Non-Armenian guests were completely mesmerized. Three people asked who he was. Unforgettable.</p><span class="twho">— Michael T., Event Director</span></div>
+    <div class="tcard"><div class="tstar">★★★★★</div><span class="tq">"</span><p class="ttext">Watching Vahan perform live was one of the most powerful musical experiences of my entire life. True, authentic artistry.</p><span class="twho">— Dmitri V., Moscow</span></div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section id="booking">
+  <div class="bgrid">
+    <div>
+      <div style="margin-bottom:28px"><div class="slabel">Book Vahan</div><h2 class="stitle">Let's Make<br><em>Something</em><br>Memorable</h2></div>
+      <p class="bintro rv">Whether it's an intimate wedding ceremony, a grand cultural event, or a private lesson — reach out directly. Vahan responds personally.</p>
+      <div class="cms">
+        <a href="tel:+18184056080" class="cm rv"><div class="cico">📞</div><div><span class="clbl">Phone / WhatsApp</span><span class="cval">+1 (818) 405-6080</span></div><span class="carr">→</span></a>
+        <a href="https://instagram.com/vahan_avetisyan_music" target="_blank" class="cm rv d1"><div class="cico">📸</div><div><span class="clbl">Instagram DM</span><span class="cval">@vahan_avetisyan_music</span></div><span class="carr">→</span></a>
+        <a href="https://youtube.com/@vahanavetisyan" target="_blank" class="cm rv d2"><div class="cico">▶</div><div><span class="clbl">YouTube</span><span class="cval">Vahan Avetisyan</span></div><span class="carr">→</span></a>
+        <a href="https://facebook.com" target="_blank" class="cm rv d3"><div class="cico" style="font-family:'DM Sans',sans-serif">f</div><div><span class="clbl">Facebook</span><span class="cval">Vahan Avetisyan</span></div><span class="carr">→</span></a>
+      </div>
+    </div>
+    <div class="bform rv d2">
+      <h3 class="ftitle">Send a Booking Inquiry</h3>
+      <div class="frow">
+        <div class="fg"><label class="flbl">First Name</label><input type="text" class="fi" placeholder="John"></div>
+        <div class="fg"><label class="flbl">Last Name</label><input type="text" class="fi" placeholder="Smith"></div>
+      </div>
+      <div class="fg"><label class="flbl">Phone Number</label><input type="text" class="fi" placeholder="+1 (555) 000-0000"></div>
+      <div class="fg"><label class="flbl">Event Type</label><select class="fsel"><option value="" disabled selected>Select event type</option><option>Wedding Ceremony</option><option>Wedding Reception</option><option>Corporate Event</option><option>Cultural / Community Event</option><option>Concert / Festival</option><option>Private Lesson</option><option>Studio Recording</option><option>Other</option></select></div>
+      <div class="frow">
+        <div class="fg"><label class="flbl">Event Date</label><input type="date" class="fi"></div>
+        <div class="fg"><label class="flbl">Location</label><input type="text" class="fi" placeholder="Los Angeles, CA"></div>
+      </div>
+      <div class="fg"><label class="flbl">Message</label><textarea class="fta" placeholder="Tell me about your event, instruments, duration…"></textarea></div>
+      <button class="bsub" onclick="submitF(event)">Send Inquiry ↗</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="fgrid">
+    <div class="fbrand">
+      <span class="flogo">Vahan <b>Avetisyan</b></span>
+      <p>Master of Armenian wind instruments. Performer, teacher, and keeper of a musical tradition thousands of years old — now available in Los Angeles and beyond.</p>
+      <div class="fflag">🇦🇲 🇺🇸</div>
+      <div class="fsocs">
+        <a href="https://instagram.com/vahan_avetisyan_music" target="_blank" class="sbtn">IG</a>
+        <a href="https://youtube.com/@vahanavetisyan" target="_blank" class="sbtn">YT</a>
+        <a href="https://facebook.com" target="_blank" class="sbtn">FB</a>
+        <a href="tel:+18184056080" class="sbtn">☎</a>
+      </div>
+    </div>
+    <div class="fcol"><h4>Navigate</h4><ul><li><a href="#press">Press & Interview</a></li><li><a href="#about">About Vahan</a></li><li><a href="#instruments">Instruments</a></li><li><a href="#services">Services</a></li><li><a href="#booking">Book Now</a></li></ul></div>
+    <div class="fcol"><h4>Instruments</h4><ul><li><a href="#instruments">Duduk</a></li><li><a href="#instruments">Saxophone</a></li><li><a href="#instruments">Pku</a></li><li><a href="#instruments">Zourna</a></li><li><a href="#instruments">Shvi &amp; Clarinet</a></li></ul></div>
+    <div class="fcol"><h4>Contact</h4><ul><li><a href="tel:+18184056080">+1 (818) 405-6080</a></li><li><a href="https://instagram.com/vahan_avetisyan_music" target="_blank">Instagram</a></li><li><a href="https://youtube.com/@vahanavetisyan" target="_blank">YouTube</a></li><li><a href="#">Glendale, CA</a></li></ul></div>
+  </div>
+  <div class="fbot">
+    <span class="fcopy">© 2025 Vahan Avetisyan. All rights reserved.</span>
+    <span class="fqt">"This is not music; this is a prayer." — William Saroyan</span>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+  <div class="mbox">
+    <button class="mclose" onclick="closeMod()">✕</button>
+    <div class="mbody">
+      <h3 id="mtitle">Performance</h3>
+      <p id="msub">Watch this on Instagram or YouTube</p>
+      <div class="mlinks">
+        <a href="https://youtu.be/ehJ3WYASMaU" target="_blank" class="btn-dark" style="font-size:10px;padding:12px 24px">Watch on YouTube</a>
+        <a href="https://instagram.com/vahan_avetisyan_music" target="_blank" class="btn-ghost" style="font-size:10px;padding:12px 24px">Instagram</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const cur=document.getElementById('cur'),curR=document.getElementById('cur-r');
+let mx=-100,my=-100,rx=-100,ry=-100;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
+(function loop(){cur.style.left=mx+'px';cur.style.top=my+'px';rx+=(mx-rx)*.12;ry+=(my-ry)*.12;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(loop)})();
+document.querySelectorAll('a,button,.icard,.svcard,.vc,.sitem,.cm,.htag,.tcard').forEach(el=>{el.addEventListener('mouseenter',()=>document.body.classList.add('hov'));el.addEventListener('mouseleave',()=>document.body.classList.remove('hov'))});
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('on',scrollY>60));
+const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+function openMod(t,s){document.getElementById('mtitle').textContent=t;document.getElementById('msub').textContent=s;document.getElementById('modal').classList.add('open')}
+function closeMod(){document.getElementById('modal').classList.remove('open')}
+document.getElementById('modal').addEventListener('click',e=>{if(e.target===document.getElementById('modal'))closeMod()});
+function submitF(e){
+  e.preventDefault();
+
+  const inputs = document.querySelectorAll('.bform .fi');
+  const firstName = inputs[0].value;
+  const lastName = inputs[1].value;
+  const phone = inputs[2].value;
+  const date = inputs[3].value;
+  const location = inputs[4].value;
+
+  const eventType = document.querySelector('.bform .fsel').value;
+  const message = document.querySelector('.bform .fta').value;
+
+  const subject = `Booking Inquiry from ${firstName} ${lastName}`;
+
+  const body = `
+First Name: ${firstName}
+Last Name: ${lastName}
+Phone: ${phone}
+Event Type: ${eventType}
+Event Date: ${date}
+Location: ${location}
+
+Message:
+${message}
+  `;
+
+  window.location.href = `mailto:vagan.avetisian@icloud.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+</script>
+</body>
+</html>
