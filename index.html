@@ -454,20 +454,12 @@ footer{background:var(--ink);padding:72px 56px 44px}
         <a href="https://facebook.com" target="_blank" class="cm rv d3"><div class="cico" style="font-family:'DM Sans',sans-serif">f</div><div><span class="clbl">Facebook</span><span class="cval">Vahan Avetisyan</span></div><span class="carr">→</span></a>
       </div>
     </div>
-    <div class="bform rv d2">
-      <h3 class="ftitle">Send a Booking Inquiry</h3>
-      <div class="frow">
-        <div class="fg"><label class="flbl">First Name</label><input type="text" class="fi" placeholder="John"></div>
-        <div class="fg"><label class="flbl">Last Name</label><input type="text" class="fi" placeholder="Smith"></div>
-      </div>
-      <div class="fg"><label class="flbl">Phone Number</label><input type="text" class="fi" placeholder="+1 (555) 000-0000"></div>
-      <div class="fg"><label class="flbl">Event Type</label><select class="fsel"><option value="" disabled selected>Select event type</option><option>Wedding Ceremony</option><option>Wedding Reception</option><option>Corporate Event</option><option>Cultural / Community Event</option><option>Concert / Festival</option><option>Private Lesson</option><option>Studio Recording</option><option>Other</option></select></div>
-      <div class="frow">
-        <div class="fg"><label class="flbl">Event Date</label><input type="date" class="fi"></div>
-        <div class="fg"><label class="flbl">Location</label><input type="text" class="fi" placeholder="Los Angeles, CA"></div>
-      </div>
-      <div class="fg"><label class="flbl">Message</label><textarea class="fta" placeholder="Tell me about your event, instruments, duration…"></textarea></div>
-      <button class="bsub" onclick="submitF(event)">Send Inquiry ↗</button>
+    <div class="bform rv d2" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:64px 44px;gap:28px">
+      <p style="font-family:'Playfair Display',serif;font-style:italic;font-size:20px;line-height:1.6;color:var(--mid);max-width:320px">The fastest way to reach Vahan is directly on Instagram.</p>
+      <a href="https://instagram.com/vahan_avetisyan_music" target="_blank" class="btn-dark" style="display:inline-flex;align-items:center;gap:12px;font-size:11px;padding:18px 40px">
+        <span style="font-size:18px">📸</span> Contact on Instagram
+      </a>
+      <p style="font-size:11px;color:var(--dim);letter-spacing:.12em">@vahan_avetisyan_music</p>
     </div>
   </div>
 </section>
@@ -502,10 +494,9 @@ footer{background:var(--ink);padding:72px 56px 44px}
     <button class="mclose" onclick="closeMod()">✕</button>
     <div class="mbody">
       <h3 id="mtitle">Performance</h3>
-      <p id="msub">Watch this on Instagram or YouTube</p>
+      <p id="msub">Watch this on Instagram</p>
       <div class="mlinks">
-        <a href="https://youtu.be/ehJ3WYASMaU" target="_blank" class="btn-dark" style="font-size:10px;padding:12px 24px">Watch on YouTube</a>
-        <a href="https://instagram.com/vahan_avetisyan_music" target="_blank" class="btn-ghost" style="font-size:10px;padding:12px 24px">Instagram</a>
+        <a href="https://instagram.com/vahan_avetisyan_music" target="_blank" class="btn-dark" style="font-size:10px;padding:12px 24px">View on Instagram</a>
       </div>
     </div>
   </div>
@@ -524,35 +515,7 @@ document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 function openMod(t,s){document.getElementById('mtitle').textContent=t;document.getElementById('msub').textContent=s;document.getElementById('modal').classList.add('open')}
 function closeMod(){document.getElementById('modal').classList.remove('open')}
 document.getElementById('modal').addEventListener('click',e=>{if(e.target===document.getElementById('modal'))closeMod()});
-function submitF(e){
-  e.preventDefault();
-
-  const inputs = document.querySelectorAll('.bform .fi');
-  const firstName = inputs[0].value;
-  const lastName = inputs[1].value;
-  const phone = inputs[2].value;
-  const date = inputs[3].value;
-  const location = inputs[4].value;
-
-  const eventType = document.querySelector('.bform .fsel').value;
-  const message = document.querySelector('.bform .fta').value;
-
-  const subject = `Booking Inquiry from ${firstName} ${lastName}`;
-
-  const body = `
-First Name: ${firstName}
-Last Name: ${lastName}
-Phone: ${phone}
-Event Type: ${eventType}
-Event Date: ${date}
-Location: ${location}
-
-Message:
-${message}
-  `;
-
-  window.location.href = `mailto:vagan.avetisian@icloud.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-}
+function submitF(e){const b=e.target;b.textContent='Sent ✓';b.style.background='#2a5c2a';b.disabled=true;setTimeout(()=>{b.textContent='Send Inquiry ↗';b.style.background='';b.disabled=false},3000)}
 </script>
 </body>
 </html>
